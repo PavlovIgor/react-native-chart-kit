@@ -24,7 +24,7 @@ var __assign = (this && this.__assign) || function () {
 };
 import React from "react";
 import { View } from "react-native";
-import { Defs, G, LinearGradient, Rect, Stop, Svg, Text } from "react-native-svg";
+import { Defs, G, LinearGradient, Rect, Stop, Svg, Text, Path } from "react-native-svg";
 import AbstractChart from "./AbstractChart";
 var barWidth = 32;
 var BarChart = /** @class */ (function (_super) {
@@ -55,9 +55,19 @@ var BarChart = /** @class */ (function (_super) {
             return data.map(function (x, i) {
                 var barHeight = _this.calcHeight(x, data, height);
                 var barWidth = 32 * _this.getBarPercentage();
-                return (<Rect key={Math.random()} x={paddingRight +
-                    (i * (width - paddingRight)) / data.length +
-                    barWidth / 2} y={((baseHeight - barHeight) / 4) * 3 + paddingTop} width={barWidth} height={2} fill={_this.props.chartConfig.color(0.6)}/>);
+
+                if (data[i] > 59) {
+                    return (
+                        <Svg key={Math.random()}>
+                            <Rect width="15" height="15" rx="7.5" fill="#79B74B" x={(paddingRight +
+                                (i * (width - paddingRight)) / data.length +
+                                barWidth / 2) +2} y={((baseHeight - barHeight) / 4) * 3 + paddingTop+2}/>
+                            <Path d="M4.4704 7.19397L6.69415 9.41773L10.5296 5.58228" stroke="white" fill="none" x={(paddingRight +
+                                (i * (width - paddingRight)) / data.length +
+                                barWidth / 2) +2} y={((baseHeight - barHeight) / 4) * 3 + paddingTop+2}/>
+                        </Svg>
+                    )
+                }
             });
         };
         _this.renderColors = function (_a) {
@@ -92,7 +102,7 @@ var BarChart = /** @class */ (function (_super) {
                 var barWidth = 32 * _this.getBarPercentage();
                 return (<Text key={Math.random()} x={paddingRight +
                     (i * (width - paddingRight)) / data.length +
-                    barWidth / 1} y={((baseHeight - barHeight) / 4) * 3 + paddingTop - 1} fill={_this.props.chartConfig.color(0.6)} fontSize="12" textAnchor="middle">
+                    barWidth / 1} y={((baseHeight - barHeight) / 4) * 3 + paddingTop - 5} fill={_this.props.chartConfig.color(0.6)} fontSize="12" textAnchor="middle">
           {renderLabel(data[i])}
         </Text>);
             });
